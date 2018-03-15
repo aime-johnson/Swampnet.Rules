@@ -42,11 +42,13 @@ namespace Swampnet.Rules.Tests
 			Id = 1,
 			Value = "Test",
 			Properties = new[]
-				{
-					new ContextClassProperty("property-one", "value-one"),
-					new ContextClassProperty("property-two", "value-two"),
-					new ContextClassProperty("property-three", "value-three")
-				}
+			{
+				new ContextClassProperty("property-one", "value-one"),
+				new ContextClassProperty("property-two", "value-two"),
+				new ContextClassProperty("property-three", "value-three"),
+				new ContextClassProperty("numeric-one", "1"),
+				new ContextClassProperty("ada", DateTime.Parse("1815-12-10").ToString())
+			}
 		};
 	}
 }

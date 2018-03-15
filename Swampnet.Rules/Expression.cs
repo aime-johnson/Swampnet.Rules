@@ -75,9 +75,6 @@ namespace Swampnet.Rules
 		LT,
 		LTE,
 
-		TAGGED,
-		NOT_TAGGED,
-
 		MATCH_ALL,
 		MATCH_ANY
 	}
