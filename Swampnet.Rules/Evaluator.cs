@@ -19,8 +19,8 @@ namespace Swampnet.Rules
 		public bool Evaluate(T context, Expression expression)
 		{
 			bool result = false;
-			string lhs = GetValue(expression.LHS, context);
-			string rhs = GetValue(expression.RHS, context);
+			var lhs = GetValue(expression.LHS, context);
+			var rhs = GetValue(expression.RHS, context);
 
 			switch (expression.Operator)
 			{

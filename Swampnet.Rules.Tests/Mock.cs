@@ -47,6 +47,7 @@ namespace Swampnet.Rules.Tests
 				new ContextClassProperty("property-two", "value-two"),
 				new ContextClassProperty("property-three", "value-three"),
 				new ContextClassProperty("numeric-one", "1"),
+				new ContextClassProperty("numeric-five", "5"),
 				new ContextClassProperty("ada", DateTime.Parse("1815-12-10").ToString())
 			}
 		};

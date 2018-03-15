@@ -16,6 +16,18 @@ namespace Swampnet.Rules.Tests
 			Assert.IsTrue(eval.Evaluate(Mock.Context, expression));
 		}
 
+
+		[TestMethod]
+		public void Evaluate_EQ_DateTime()
+		{
+			var eval = Mock.Evaluator;
+			var dt = DateTime.Parse("1815-12-10");
+
+			var expression = new Expression(ExpressionOperatorType.EQ, "{ada}", dt);              // true
+
+			Assert.IsTrue(eval.Evaluate(Mock.Context, expression));
+		}
+
 		[TestMethod]
 		public void Evaluate_NOT_EQ()
 		{
@@ -42,7 +54,7 @@ namespace Swampnet.Rules.Tests
 		{
 			var eval = Mock.Evaluator;
 
-			var expression = new Expression(ExpressionOperatorType.GT, DateTime.Now.ToString(), "{ada}");              // true
+			var expression = new Expression(ExpressionOperatorType.GT, DateTime.Now, "{ada}");              // true
 
 			Assert.IsTrue(eval.Evaluate(Mock.Context, expression));
 		}
@@ -73,7 +85,7 @@ namespace Swampnet.Rules.Tests
 		{
 			var eval = Mock.Evaluator;
 
-			var expression = new Expression(ExpressionOperatorType.GT, "2", "{id}");          // true
+			var expression = new Expression(ExpressionOperatorType.GT, 2, "{id}");          // true
 
 			Assert.IsTrue(eval.Evaluate(Mock.Context, expression));
 		}
@@ -83,7 +95,7 @@ namespace Swampnet.Rules.Tests
 		{
 			var eval = Mock.Evaluator;
 
-			var expression = new Expression(ExpressionOperatorType.GTE, "1", "{id}");          // true
+			var expression = new Expression(ExpressionOperatorType.GTE, 1, "{id}");          // true
 
 			Assert.IsTrue(eval.Evaluate(Mock.Context, expression));
 		}

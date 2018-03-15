@@ -14,11 +14,11 @@ namespace Swampnet.Rules
 			Operator = ExpressionOperatorType.MATCH_ALL;
 		}
 
-		public Expression(ExpressionOperatorType op, string operand, object value)
+		public Expression(ExpressionOperatorType op, object operand, object value)
 			: this()
 		{
 			Operator = op;
-			LHS = operand;
+			LHS = operand?.ToString();
 			RHS = value?.ToString();
 		}
 
