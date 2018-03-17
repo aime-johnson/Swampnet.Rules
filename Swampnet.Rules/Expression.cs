@@ -60,23 +60,4 @@ namespace Swampnet.Rules
 				: $"{LHS} {Operator} {RHS}";
 		}
 	}
-
-
-	public enum ExpressionOperatorType
-	{
-		//[Display(Name = "@TODO: Friendly name")]
-		NULL,
-
-		EQ,
-		NOT_EQ,
-		REGEX,
-		GT,
-		GTE,
-		LT,
-		LTE,
-
-		MATCH_ALL,
-		MATCH_ANY
-	}
-
 }

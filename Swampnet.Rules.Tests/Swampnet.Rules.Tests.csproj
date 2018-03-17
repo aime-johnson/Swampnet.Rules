@@ -52,6 +52,7 @@
     <Compile Include="ExpressionEvaluationTests.cs" />
     <Compile Include="Mock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleProcessorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

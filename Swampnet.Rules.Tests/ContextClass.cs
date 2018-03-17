@@ -10,11 +10,11 @@ namespace Swampnet.Rules.Tests
 	{
 		public int Id { get; set; }
 		public string Value { get; set; }
-		public ContextClassProperty[] Properties { get; set; }
+		public List<ContextClassProperty> Properties { get; set; }
 	}
 
 
-	class ContextClassProperty
+	class ContextClassProperty : INameValue
 	{
 		public ContextClassProperty()
 		{
@@ -29,5 +29,10 @@ namespace Swampnet.Rules.Tests
 
 		public string Name { get; set; }
 		public string Value { get; set; }
+
+		public override string ToString()
+		{
+			return $"[{Name}] {Value}";
+		}
 	}
 }

@@ -7,7 +7,7 @@ namespace Swampnet.Rules.Tests
 	public class ExpressionEvaluationTests
 	{
 		[TestMethod]
-		public void Evaluate_EQ()
+		public void Expression_Evaluate_EQ()
 		{
 			var eval = Mock.Evaluator;
 
@@ -18,7 +18,7 @@ namespace Swampnet.Rules.Tests
 
 
 		[TestMethod]
-		public void Evaluate_EQ_DateTime()
+		public void Expression_Evaluate_EQ_DateTime()
 		{
 			var eval = Mock.Evaluator;
 			var dt = DateTime.Parse("1815-12-10");
@@ -29,7 +29,7 @@ namespace Swampnet.Rules.Tests
 		}
 
 		[TestMethod]
-		public void Evaluate_NOT_EQ()
+		public void Expression_Evaluate_NOT_EQ()
 		{
 			var eval = Mock.Evaluator;
 
@@ -39,7 +39,7 @@ namespace Swampnet.Rules.Tests
 		}
 
 		[TestMethod]
-		public void Evaluate_LT_DateTime()
+		public void Expression_Evaluate_LT_DateTime()
 		{
 			var eval = Mock.Evaluator;
 
@@ -50,7 +50,7 @@ namespace Swampnet.Rules.Tests
 
 
 		[TestMethod]
-		public void Evaluate_GT_DateTime()
+		public void Expression_Evaluate_GT_DateTime()
 		{
 			var eval = Mock.Evaluator;
 
@@ -61,7 +61,7 @@ namespace Swampnet.Rules.Tests
 
 
 		[TestMethod]
-		public void Evaluate_LT()
+		public void Expression_Evaluate_LT()
 		{
 			var eval = Mock.Evaluator;
 
@@ -71,7 +71,7 @@ namespace Swampnet.Rules.Tests
 		}
 
 		[TestMethod]
-		public void Evaluate_LTE()
+		public void Expression_Evaluate_LTE()
 		{
 			var eval = Mock.Evaluator;
 
@@ -81,7 +81,7 @@ namespace Swampnet.Rules.Tests
 		}
 
 		[TestMethod]
-		public void Evaluate_GT()
+		public void Expression_Evaluate_GT()
 		{
 			var eval = Mock.Evaluator;
 
@@ -91,7 +91,7 @@ namespace Swampnet.Rules.Tests
 		}
 
 		[TestMethod]
-		public void Evaluate_GTE()
+		public void Expression_Evaluate_GTE()
 		{
 			var eval = Mock.Evaluator;
 
@@ -101,7 +101,7 @@ namespace Swampnet.Rules.Tests
 		}
 
 		[TestMethod]
-		public void Evaluate_REGEX()
+		public void Expression_Evaluate_REGEX()
 		{
 			var eval = Mock.Evaluator;
 
@@ -112,7 +112,7 @@ namespace Swampnet.Rules.Tests
 
 
 		[TestMethod]
-		public void Evaluate_MATCH_ALL()
+		public void Expression_Evaluate_MATCH_ALL()
 		{
 			var eval = Mock.Evaluator;
 
@@ -132,7 +132,7 @@ namespace Swampnet.Rules.Tests
 
 
 		[TestMethod]
-		public void Evaluate_MATCH_ANY()
+		public void Expression_Evaluate_MATCH_ANY()
 		{
 			var eval = Mock.Evaluator;
 
@@ -153,7 +153,7 @@ namespace Swampnet.Rules.Tests
 
 
 		[TestMethod]
-		public void Evaluate_ComplexExpression_02()
+		public void Expression_Evaluate_ComplexExpression_02()
 		{
 			var eval = Mock.Evaluator;
 
@@ -172,7 +172,7 @@ namespace Swampnet.Rules.Tests
 
 
 		[TestMethod]
-		public void Evaluate_LookupsBothSides()
+		public void Expression_Evaluate_LookupsBothSides()
 		{
 			var eval = Mock.Evaluator;
 
@@ -184,7 +184,7 @@ namespace Swampnet.Rules.Tests
 
 
 		[TestMethod]
-		public void Evaluate_ComplexExpression()
+		public void Expression_Evaluate_ComplexExpression()
 		{
 			var eval = Mock.Evaluator;
 
