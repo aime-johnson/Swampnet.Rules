@@ -21,36 +21,9 @@ namespace Swampnet.Rules
 		public ActionDefinition[] FalseActions { get; set; }
 
 		// @todo: Calculated from Actions I guess. Think I'd prefer this to be in the processor rather than here?
-		public int MaxHistoryRequired => 5;
-	}
-
-
-	public class ActionDefinition
-	{
-		public string Name { get; set; }
-		public ActionParameter[] Parameters { get; set; }
-	}
-
-
-	public class ActionParameter : INameValue
-	{
-		public ActionParameter()
-		{
-		}
-
-		public ActionParameter(string name, string value)
-			: this()
-		{
-			Name = name;
-			Value = value;
-		}
-
-		public string Name { get; set; }
-		public string Value { get; set; }
-
-		public override string ToString()
-		{
-			return $"[{Name}] {Value}";
-		}
+		public int MaxHistoryRequired =>
+			(TrueActions ?? Enumerable.Empty<ActionDefinition>().ToArray())
+				.Concat((FalseActions ?? Enumerable.Empty<ActionDefinition>().ToArray()))
+				.Max(x => x.CosecutiveHits);
 	}
 }

@@ -14,6 +14,7 @@ namespace Swampnet.Rules.Tests
 			Value = "Test",
 			Properties = new List<ContextClassProperty>
 			{
+				new ContextClassProperty("isTrue", "true"),
 				new ContextClassProperty("property-one", "value-one"),
 				new ContextClassProperty("property-two", "value-two"),
 				new ContextClassProperty("property-three", "value-three"),
@@ -26,7 +27,7 @@ namespace Swampnet.Rules.Tests
 
 		public static Rule Rule => new Rule()
 		{
-			Expression = new Expression(ExpressionOperatorType.EQ, true, true),
+			Expression = new Expression(ExpressionOperatorType.EQ, "{isTrue}", true), // Always true
 			TrueActions = new[]
 			{
 				new ActionDefinition()
@@ -37,7 +38,17 @@ namespace Swampnet.Rules.Tests
 						new ActionParameter("test-01-parameter-01", "value-01"),
 						new ActionParameter("test-01-parameter-02", "value-02")
 					}
+				},
+				new ActionDefinition()
+				{
+					Name = "Test-02",
+					CosecutiveHits = 3,
+					Parameters = new[]
+					{
+						new ActionParameter("test-02-parameter-01", "value-01")
+					}
 				}
+
 			}
 		};
 
@@ -69,22 +80,23 @@ namespace Swampnet.Rules.Tests
 
 		public static RuleProcessor<ContextClass> RuleProcessor => new RuleProcessor<ContextClass>((actionDefinition) =>
 		{
-			switch (actionDefinition.Name.ToLowerInvariant())
+			// Normally you'd set up a way to map various action definitions to your own custom handlers. Just implement a generic solution here for tests.
+			return (context, rule, definition) =>
 			{
-				case "test-01":
-					return (context, rule, definition) =>
-					{
-						// Copy all the definition arguments to the context properties
-						foreach (var parameter in definition.Parameters)
-						{
-							context.Properties.Add(new ContextClassProperty(parameter.Name, parameter.Value));
-						}
-					};
-
-
-				default:
-					throw new NotSupportedException(actionDefinition.Name);
-			}
+				var nv = context.Properties.Get($"definition-{definition.Name}-fired");
+				if(nv == null)
+				{
+					nv = new ContextClassProperty($"definition-{definition.Name}-fired", "0");
+					context.Properties.Add((ContextClassProperty)nv);
+				}
+				nv.Value = (int.Parse(nv.Value) + 1).ToString();
+				
+				// Copy all the definition arguments to the context properties
+				foreach (var parameter in definition.Parameters)
+				{
+					context.Properties.Add(new ContextClassProperty(parameter.Name, parameter.Value));
+				}
+			};
 		}, Mock.Evaluator);
 
 

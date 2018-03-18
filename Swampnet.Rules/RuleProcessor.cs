@@ -10,16 +10,25 @@ namespace Swampnet.Rules
     {
 		public class RuleProcessorResult
 		{
+			private static long _id = 0;
+
 			internal RuleProcessorResult(Rule rule, bool result)
 			{
 				Timestamp = DateTime.UtcNow;
 				Rule = rule;
 				Result = result;
+				Id = ++_id;
 			}
 
 			internal Rule Rule { get; private set; }
+			internal long Id { get; set; }
 			public DateTime Timestamp { get; private set; }
 			public bool Result { get; private set; }
+
+			public override string ToString()
+			{
+				return $"[Id] [{Timestamp.ToLongTimeString()}] {Result}";
+			}
 		}
 
 
@@ -48,8 +57,16 @@ namespace Swampnet.Rules
 			// Save result 
 			SaveResult(result, rule);
 
+			// Get consectutive hits
+			var history = GetHistory(rule);
+
+			var consecutiveHits = history
+				.OrderByDescending(h => h.Timestamp).ThenByDescending(h => h.Id)
+				.TakeWhile(h => h.Result == result)
+				.OrderBy(h => h.Timestamp).ThenBy(h => h.Id);
+
 			// Process any true/false actions
-			ProcessActions(context, rule, result ? rule.TrueActions : rule.FalseActions);
+			ProcessActions(context, rule, result ? rule.TrueActions : rule.FalseActions, consecutiveHits);
 		}
 
 
@@ -57,7 +74,8 @@ namespace Swampnet.Rules
 		{
 			return _results
 				.Where(r => r.Rule == rule)
-				.OrderBy(r => r.Timestamp);
+				.OrderBy(r => r.Timestamp)
+				.ThenBy(r => r.Id);
 		}
 
 
@@ -67,7 +85,7 @@ namespace Swampnet.Rules
 
 			var expiredRuleResults = GetHistory(rule)
 				.OrderByDescending(r => r.Timestamp)        // newest first
-				.Skip(rule.MaxHistoryRequired);				// Skip over required
+				.Skip(rule.MaxHistoryRequired);             // Skip over required
 
 			// ...remove the rest
 			foreach (var expired in expiredRuleResults)
@@ -76,22 +94,25 @@ namespace Swampnet.Rules
 			}
 		}
 
-		private void ProcessActions(T context, Rule rule, IEnumerable<ActionDefinition> actionDefinitions)
+		private void ProcessActions(T context, Rule rule, IEnumerable<ActionDefinition> actionDefinitions, IEnumerable<RuleProcessorResult> consecutiveHits)
 		{
 			if (actionDefinitions != null)
 			{
 				foreach (var definition in actionDefinitions)
 				{
-					Trace.WriteLine($">> {definition.Name}");
-					try
+					if(consecutiveHits.Count() >= definition.CosecutiveHits)
 					{
-						_resolver
-							.Invoke(definition)                     // Get Action<T, Rule<T>, ActionDefinition>
-							.Invoke(context, rule, definition);     // And execute it
-					}
-					catch (Exception ex)
-					{
-						Trace.TraceError($"{definition.Name} threw error: " + ex.Message);
+						Trace.WriteLine($"'{definition.Name}' fired (consecutive hits: {consecutiveHits.Count()} / {definition.CosecutiveHits})");
+						try
+						{
+							_resolver
+								.Invoke(definition)                     // Get Action<T, Rule<T>, ActionDefinition>
+								.Invoke(context, rule, definition);     // And execute it
+						}
+						catch (Exception ex)
+						{
+							Trace.TraceError($"{definition.Name} threw error: " + ex.Message);
+						}
 					}
 				}
 			}
