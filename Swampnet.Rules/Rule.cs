@@ -19,6 +19,9 @@ namespace Swampnet.Rules
 		/// Actions taken when expression is false
 		/// </summary>
 		public ActionDefinition[] FalseActions { get; set; }
+
+		// @todo: Calculated from Actions I guess. Think I'd prefer this to be in the processor rather than here?
+		public int MaxHistoryRequired => 5;
 	}
 
 

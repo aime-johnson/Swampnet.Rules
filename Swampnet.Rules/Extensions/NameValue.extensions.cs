@@ -13,7 +13,7 @@ namespace Swampnet.Rules
 		}
 
 
-		public static string StringValue(this IEnumerable<INameValue> source, string name, string defaultValue = null)
+		public static string StringValue(this IEnumerable<INameValue> source, string name, string defaultValue = "")
 		{
 			var nameValue = source.Get(name);
 			return nameValue == null
